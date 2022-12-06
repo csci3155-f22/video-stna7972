@@ -1,0 +1,84 @@
+﻿@inject IDialogService DialogService
+
+
+    <MudDialog>
+        <DialogContent>
+            <MudRating Size="Size.Medium" @bind-SelectedValue="@rating" />
+        </DialogContent>
+        <DialogActions>
+            <MudButton Color="Color.Primary" OnClick="Submit">Ok</MudButton>
+        </DialogActions>
+    </MudDialog>
+@code {
+    int rating;
+    int SelectedResponse;
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+    string[] responses = new string[]
+    {
+        "Will you not graduate because of this class?",
+        "It was all in the syllabus",
+        "Is Scala too hard for you?",
+        "Why are you angy?",
+        "Just git gud",
+        "Did we crush all your hopes and dream with the midterm?",
+        "Whats wrong with spending 16 hours a week in CSEL?",
+        "Did you think that you will pass 🤣",
+        "Why isn't your rating perfect? This class is perfect",
+        "Did Andrew carry your assignment grade"
+
+    };
+
+
+
+
+
+
+
+
+
+
+
+
+    int random;
+    void Submit()
+    {
+        if (ProcessRating(out DialogPosition? position))
+        {
+            MudDialog.Close(DialogResult.Ok(true));
+
+            DialogOptions fullScreen = new DialogOptions()
+            {
+                FullScreen = true,
+                NoHeader = true,
+            };
+            DialogService.Show<Dialog_Carusel>("", fullScreen);
+            return;
+        }
+        if (rating != 0)
+        {
+            do
+            {
+                Random R = new Random();
+                random = R.Next(10);
+            }
+            while (random == SelectedResponse);
+            SelectedResponse = random;
+            var options = new DialogOptions { CloseOnEscapeKey = true, DisableBackdropClick = true, Position = position };
+            MudDialog.SetTitle(responses[SelectedResponse]);
+            MudDialog.SetOptions(options);
+        }
+    } 
+
+    bool ProcessRating(out DialogPosition? position)
+    {
+        Random R = new Random();
+        int random = R.Next(1, 9);
+        position = rating switch
+        {
+            0 => MudDialog.Options.Position,
+            > 0 and < 5 => (DialogPosition)random,
+            _ => MudDialog.Options.Position
+        };
+        return (rating == 5);
+    }
+}

@@ -1,0 +1,41 @@
+﻿@inject IDialogService DialogService
+@inject NavigationManager NavManager
+
+<MudDialog>
+        <DialogContent>
+            <MudCarousel Class="mud-width-full" Style="height:300px;"  ShowArrows="false" ShowBullets="true" EnableSwipeGesture="false" AutoCycle="true" TData="object">
+                <MudCarouselItem Transition="@Transition.Slide" Color="@Color.Primary">
+                    <div class="d-flex" style="height:100%">
+                    <h3 Class="mx-auto my-auto offset-text">Any feedback less than perfect goes straight in the shredder.</h3>
+                    </div>
+                </MudCarouselItem>
+                <MudCarouselItem Transition="@Transition.Slide" Color="@Color.Secondary">
+                    <div class="d-flex" style="height:100%">
+                    <h3 Class="mx-auto my-auto offset-text">You picked the right choice. There is absolutely nothing wrong with how this class is setup or taught.</h3>
+                    </div>
+                </MudCarouselItem>
+            </MudCarousel>
+        </DialogContent>
+    </MudDialog>
+<h3 class="align-content-center mx-auto my-auto">Loading Response...</h3>
+
+@code {
+    protected override void OnInitialized()
+    {
+        Task.Run(() =>
+        {
+            Thread.Sleep(10000);
+            DoWork(() =>
+            {
+                NavManager.NavigateTo("response");
+            });
+        });
+
+    }
+    public static void DoWork(Action processAction)
+    {
+        // do work
+        if (processAction != null)
+            processAction();
+    }
+}

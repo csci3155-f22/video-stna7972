@@ -19,6 +19,6 @@ Follow this guide and you will be able to open and build the app in an ide https
 
 TODO: Update the following links and remove this line.
 
-- YouTube: https://youtu.be/TODO.
+- YouTube: https://www.youtube.com/watch?v=obh-aslVV64
 - Script: [script.pdf](script.pdf).
 - Recording: [recording.mp4](recording.mp4).

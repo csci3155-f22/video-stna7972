@@ -1,0 +1,47 @@
+﻿@using MudBlazor;
+@inject IDialogService DialogService
+
+@page "/"
+
+<PageTitle>3155 Sucks</PageTitle>
+
+<h2>Did you take the midterm and worry that your gpa might look like this?</h2>
+<MudChart ChartType="ChartType.Line" ChartSeries="@Series"  XAxisLabels="@XAxisLabels" Width="100%" Height="350" ChartOptions="@options"></MudChart>
+
+<h2>Did that make you concerned that you might not pass?</h2>
+
+<MudImage Fluid="true" Class="rounded-lg" Width="300" Src="R.png" />
+
+
+<h2>Well don't worry, we have made a review system to collect feedback</h2>
+<MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@ButtonClicked">Send Feedback</MudButton>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+@code{
+    private ChartOptions options = new ChartOptions();
+    private readonly string[] XAxisLabels = { "GPA Before this class", "GPA After this class" };
+
+    public List<ChartSeries> Series = new List<ChartSeries>()
+    {
+        new ChartSeries() {  Data = new double[] { 3.7, -2 } },
+    };
+    protected override void OnInitialized()
+    {
+        options.InterpolationOption = InterpolationOption.Straight;
+        options.YAxisTicks = 4;
+        options.ChartPalette = new string[] { "Red" };
+        options.DisableLegend = true;
+
+    }
+    void ButtonClicked()
+    {
+        var options = new DialogOptions { CloseOnEscapeKey = true, DisableBackdropClick = true };
+        DialogService.Show<Dialog_Rating>("Rate this class", options);
+    }
+
+}
